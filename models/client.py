@@ -3,11 +3,12 @@ This module have the class Client
 for create a client.
 """
 
-from requests import get, post, put, delete
 from simplejson.errors import JSONDecodeError
-from prefix.prefixs import PREFIX_POST, PREFIX_DELETE, PREFIX_PUT, PREFIX_GET_FILE
+from requests import get, post, put, delete
 from data.paths import DEFAULT_PATH_TO_SAVE
+from prefix.prefixs import PREFIX_POST, PREFIX_DELETE, PREFIX_PUT, PREFIX_GET_FILE
 from json import dumps
+from .errors import FileToSaveNotFound
 
 class Client:
   """
@@ -71,7 +72,7 @@ class Client:
     # hacemos esta excepcion para que si el id, del archivo como valor tenga letras o numeros
     # porque si no nos lanzara la exepcion de JSONDecodeError
     except JSONDecodeError:
-      raise KeyError('The value for get the file not found.')
+      raise KeyError('Id of the file not found. In the server.')
 
 
   def make_request_post(self, data:str) -> dict:
@@ -142,9 +143,12 @@ class Client:
     Save the content of the request passed for parameter.
     """
 
-    with open(file_to_save, 'w') as f: # wrinting in the file
-      for line in content:
-        f.write(str(line))
+    try:
+      with open(file_to_save, 'w') as f: # wrinting in the file
+        for line in content:
+          f.write(str(line))
+    except FileNotFoundError:
+      raise FileToSaveNotFound('[-] The file not is found in the server.')
 
     print( f'\n[+] Succesfully saved for get-file request in {file_to_save}' )
 

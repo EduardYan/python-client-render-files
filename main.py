@@ -4,12 +4,13 @@ for make a client from a server of files.
 
 """
 
-from simplejson.errors import JSONDecodeError
+# from simplejson.errors import JSONDecodeError
 from models.client import Client
 from optparse import OptionParser
 from messages.initials import INITIAL_MESSAGE
 from models.error import Error
 from helpers.utils import ask_save_output, show_content_request
+from models.errors import FileToSaveNotFound
 
 def get_options():
   """
@@ -79,14 +80,14 @@ def main() -> None:
       clientFiles = Client(file_server)
       output = clientFiles.make_request_get_file(id_file)
 
-      if ask_save_output():
+      if ask_save_output(): # validating if save the file
         path_file = input('Path from file for save the output > ')
         clientFiles.save_request_get_file(output['content'], path_file)
 
       else: show_content_request(False, output)
 
     except KeyError: # in case the id of the file not found
-      error = Error('[-] Id of the file not found.')
+      error = Error('[-] Id of the file not found. In the server.')
       print(error)
 
     except FileNotFoundError: # in case the file of the server not found
@@ -98,16 +99,20 @@ def main() -> None:
       print(error)
 
     except OSError: # this is in case some error with the operative system
-      error = Error('[-] Some problem with the network of the system.')
+      error = Error('[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
       print(error)
 
     except ConnectionError:  # in case bad connection
       error = Error('[-] Some problem with the connection with the server, try restart the server.')
       print(error)
 
-    except JSONDecodeError:
-      error = Error('[-] The file is a image, you can get or see with a browser.')
+    except FileToSaveNotFound:
+      error = Error('[-] The file not is found in the server.')
       print(error)
+
+    # except JSONDecodeError: # this is deprecated
+    #   error = Error('[-] The file is a image, you can get or see with a browser.')
+    #   print(error)
 
 
   if method == 'post' or method == 'POST':
