@@ -93,24 +93,29 @@ class Client:
       return content
 
     except:
-      print('some error')
+      print('Some error')
 
-  def make_request_put(self, data:str) -> dict:
+  def make_request_put(self, id:str, data:str) -> dict:
     """
     Make the request in case be a put.
     Update the data passed for parameter.
     """
 
     if type(id) not in [str]:
+      raise TypeError('The id must be a string.')
+    if type(data) not in [str]:
       raise TypeError('The data must be a string.')
-
 
     direction = self.get_file_request()
 
-    request = put(direction + PREFIX_PUT, data)
-    content = request.json()
+    try:
+      request = put(direction + PREFIX_PUT.format(id = id), {'path': data})
+      content = request.json()
 
-    return content
+      return content
+
+    except JSONDecodeError:
+      raise KeyError('Id of the file not found. In the server.')
 
 
   def make_request_delete(self, id:str = 0) -> dict:
@@ -126,10 +131,14 @@ class Client:
 
     direction = self.get_file_request()
 
-    request = delete(direction + PREFIX_DELETE, id)
-    content = request.json()
+    try:
+      request = delete(direction + PREFIX_DELETE.format(id = id))
+      content = request.json()
 
-    return content
+      return content
+
+    except JSONDecodeError:
+      raise KeyError('Id of the file not found. In the server.')
 
   def save_request_get(self, content:str, file_to_save = DEFAULT_PATH_TO_SAVE):
     """
@@ -170,14 +179,25 @@ class Client:
     Save the content of the request put passed for parameter.
     """
 
-    print('saving')
+    # open the file for writing
+    with open(file_to_save, 'w') as f: # wrinting in the file
+        content = dumps(content, indent = 4)
+        f.write(content)
+
+    print( f'\n[+] Succesfully saved for put request in {file_to_save}' )
 
   def save_request_delete(self, content:str, file_to_save = DEFAULT_PATH_TO_SAVE):
     """
     Save the content of the request delete passed for parameter.
     """
 
-    print('saving')
+    # open the file for writing
+    with open(file_to_save, 'w') as f: # wrinting in the file
+        content = dumps(content, indent = 4)
+        f.write(str(content))
+
+    print( f'\n[+] Succesfully saved for put request in {file_to_save}' )
+
 
   def __str__(self) -> str:
       return f'This is a client {self.nameClient}'

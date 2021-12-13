@@ -52,6 +52,22 @@ def show_content_request(type_to_show:str, output:str) -> None:
     print(f"Id file -> {output['id']}")
     print(f"Path File -> {output['path']}")
 
+  elif type_to_show == 'put': # in case be a put request
+    print('\n---------------------- Updated File --------------------------')
+    print(output['message'])
+    print(f"Id -> {output['fileUpdated']['id']}")
+    print(f"Old Path -> {output['fileUpdated']['oldPath']}")
+    print(f"New Path -> {output['fileUpdated']['newPath']}")
+
+    print('\n----------------------- New Files ----------------------------')
+    output = dumps(output['currentsFiles'], indent = 4)
+    print(output)
+
+  elif type_to_show == 'delete':
+    print(f"\n----------------------- Deleting File number {output['fileDeleted']['id']} of the server --------------------------")
+    print(output['message'])
+    print(f"Path deleted -> {output['fileDeleted']['path']}")
+
   else: # in case be other
     content = dumps(output, indent = 4)
     print('\n---------------------- Content ----------------------------')

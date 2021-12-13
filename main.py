@@ -109,7 +109,7 @@ def main() -> None:
 
   if method == 'post' or method == 'POST':
     try:
-      print('\nPut the data for send at server.')
+      print('Put the data for send at server.')
       data = input('Data (Sample /home/user/hello.txt ) > ')
       clientFiles = Client(file_server)
       output = clientFiles.make_request_post(data)
@@ -135,9 +135,26 @@ def main() -> None:
 
   if method == 'put' or method == 'PUT':
     try:
+      print('Put the data and id for update in the server.')
+      id = input('Id File > ')
+      data = input('New Data (Sample /home/user/hello.txt ) > ')
       clientFiles = Client(file_server)
-      o = clientFiles.make_request_put()
-      print(o)
+      output = clientFiles.make_request_put(id, data)
+
+      if ask_save_output():
+        path_file = input('Path from file for save the output > ')
+        clientFiles.save_request_post(output, path_file) # saving the request
+
+      else:
+        show_content_request('put', output)
+
+    except KeyError: # in case the id of the file not found
+      error = Error('\n[-] Id of the file not found. In the server.')
+      print(error)
+
+    except IsADirectoryError: # in case be a directory the path for save the output
+      error = Error('\n[-] The path for save the file is a directory !!')
+      print(error)
 
     except OSError:
       error = Error('Some problem with the network of the system.')
@@ -149,9 +166,24 @@ def main() -> None:
 
   if method == 'delete' or method == 'DELETE':
     try:
+      print('Put the id of the file in the server for delete it.')
+      id = input('Id file > ')
       clientFiles = Client(file_server)
-      o = clientFiles.make_request_delete()
-      print(o)
+      output = clientFiles.make_request_delete(id)
+
+      if ask_save_output():
+        path_file = input('Path from file for save the output > ')
+        clientFiles.save_request_delete(output, path_file) # saving in case be delete request
+
+      else: show_content_request('delete', output)
+
+    except KeyError: # in case the id of the file not found
+      error = Error('\n[-] Id of the file not found. In the server.')
+      print(error)
+
+    except IsADirectoryError: # in case be a directory the path for save the output
+      error = Error('\n[-] The path for save the file is a directory !!')
+      print(error)
 
     except OSError:
       error = Error('Some problem with the network of the system.')
