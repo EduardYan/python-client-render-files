@@ -28,23 +28,31 @@ def ask_save_output() -> bool:
 
   return False
 
-def show_content_request(is_get:bool, output:str) -> None:
+def show_content_request(type_to_show:str, output:str) -> None:
   """
   Show the content of the request passed
   for parameter.
 
+  If the parameter type_to_show is 'get-file', show your key content
+  with some formating.
+
+  If not, show the request without formating.
+
   """
 
-  if not is_get:
+  if type(type_to_show) not in [str]:
+    raise TypeError('The parameter type_to_show must be a string.')
+
+  if type_to_show == 'get-file':
     # getting the content of the request and converting in a string with json formating
-    content = output['content']
+    content = dumps(output['content'], indent = 4)
     print('\n---------------------- Content ----------------------------')
     print(content)
     print('\n---------------------- Info ------------------------------')
     print(f"Id file -> {output['id']}")
     print(f"Path File -> {output['path']}")
 
-  else:
+  else: # in case be other
     content = dumps(output, indent = 4)
     print('\n---------------------- Content ----------------------------')
     print(content)

@@ -8,7 +8,6 @@ from requests import get, post, put, delete
 from data.paths import DEFAULT_PATH_TO_SAVE
 from prefix.prefixs import PREFIX_POST, PREFIX_DELETE, PREFIX_PUT, PREFIX_GET_FILE
 from json import dumps
-from .errors import FileToSaveNotFound
 
 class Client:
   """
@@ -86,10 +85,15 @@ class Client:
 
     direction = self.get_file_request()
 
-    request = post(direction + PREFIX_POST, data)
-    content = request.json()
+    try:
+      # getting the request and sending the data as path=data
+      request = post(direction + PREFIX_POST, {'path': data})
+      content = request.json()
 
-    return content
+      return content
+
+    except:
+      print('some error')
 
   def make_request_put(self, data:str) -> dict:
     """
@@ -143,12 +147,9 @@ class Client:
     Save the content of the request passed for parameter.
     """
 
-    try:
-      with open(file_to_save, 'w') as f: # wrinting in the file
-        for line in content:
-          f.write(str(line))
-    except FileNotFoundError:
-      raise FileToSaveNotFound('[-] The file not is found in the server.')
+    with open(file_to_save, 'w') as f: # wrinting in the file
+      for line in content:
+        f.write(str(line))
 
     print( f'\n[+] Succesfully saved for get-file request in {file_to_save}' )
 
@@ -157,7 +158,12 @@ class Client:
     Save the content of the request post passed for parameter.
     """
 
-    print('saving')
+    # open the file for writing
+    with open(file_to_save, 'w') as f: # wrinting in the file
+        content = dumps(content, indent = 4) # formating the content for save
+        f.write(str(content))
+
+    print( f'\n[+] Succesfully saved for post request in {file_to_save}' )
 
   def save_request_put(self, content:str, file_to_save = DEFAULT_PATH_TO_SAVE):
     """
