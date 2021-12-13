@@ -51,7 +51,7 @@ if __name__ == '__main__':
         clientFiles.save_request_get(output, path_file)
 
       else:
-        show_content_request('get', output)
+        show_content_request(True, output)
 
     except FileNotFoundError:
       error = Error('[-] The file of the server not found in the system.')
@@ -79,7 +79,7 @@ if __name__ == '__main__':
         path_file = input('Path from file for save the output > ')
         clientFiles.save_request_get_file(output['content'], path_file)
 
-      else: show_content_request('normal', output)
+      else: show_content_request(False, output)
 
     except KeyError:
       error = Error('[-] Id of the file not found.')

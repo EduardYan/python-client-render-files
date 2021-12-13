@@ -61,10 +61,14 @@ class Client:
 
     direction = self.get_file_request()
 
-    request = get(direction + PREFIX_GET_FILE.format(id = id))
-    content = request.json()
+    try:
+      request = get(direction + PREFIX_GET_FILE.format(id = id))
+      content = request.json()
 
-    return content
+      return content
+
+    except:
+      raise KeyError('The value for get the file not found.')
 
 
   def make_request_post(self, data:str) -> dict:
