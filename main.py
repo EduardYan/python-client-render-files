@@ -32,7 +32,11 @@ def get_options():
   return options
 
 
-if __name__ == '__main__':
+def main() -> None:
+  """
+  This is the principal function for execute
+  the client.
+  """
   # gettings the values of the options
   options = get_options()
   method = options.method
@@ -81,7 +85,7 @@ if __name__ == '__main__':
 
       else: show_content_request(False, output)
 
-    except KeyError:
+    except KeyError: # in case the id of the file not found
       error = Error('[-] Id of the file not found.')
       print(error)
 
@@ -89,7 +93,7 @@ if __name__ == '__main__':
       error = Error('[-] The file from the direction for the server. Not found.')
       print(error)
 
-    except IsADirectoryError:
+    except IsADirectoryError: # in case be a directory
       error = Error('[-] The path for save the file is a directory !!')
       print(error)
 
@@ -101,11 +105,10 @@ if __name__ == '__main__':
       error = Error('[-] Some problem with the connection with the server, try restart the server.')
       print(error)
 
-    # this is in case the json module lauch in exception, with the id captured as value
-    # for the request get-file
-    except JSONDecodeError:  
-      error = Error('[-] Id of the file not found.')
+    except JSONDecodeError:
+      error = Error('[-] The file is a image, you can get or see with a browser.')
       print(error)
+
 
   if method == 'post' or method == 'POST':
     try:
@@ -149,3 +152,7 @@ if __name__ == '__main__':
     except ConnectionError:  # in case bad connection
       error = Error('Some problem with the connection with the server, try restart the server.')
       print(error)
+
+
+if __name__ == '__main__':
+  main()

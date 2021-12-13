@@ -4,6 +4,7 @@ for create a client.
 """
 
 from requests import get, post, put, delete
+from simplejson.errors import JSONDecodeError
 from prefix.prefixs import PREFIX_POST, PREFIX_DELETE, PREFIX_PUT, PREFIX_GET_FILE
 from data.paths import DEFAULT_PATH_TO_SAVE
 from json import dumps
@@ -67,7 +68,9 @@ class Client:
 
       return content
 
-    except:
+    # hacemos esta excepcion para que si el id, del archivo como valor tenga letras o numeros
+    # porque si no nos lanzara la exepcion de JSONDecodeError
+    except JSONDecodeError:
       raise KeyError('The value for get the file not found.')
 
 
