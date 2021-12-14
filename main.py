@@ -66,15 +66,15 @@ def main() -> None:
       error = Error('[-] The path for save the file is a directory !!')
       print(error)
 
-    except OSError:
-      error = Error('[-] Some problem with the network of the system.')
+    except OSError: # this is when have some problem with the system
+      error = Error('[-] Some problem with the network of the system. Or verify the path for save the output of the request.')
       print(error)
 
     except ConnectionError:  # in case bad connection
       error = Error('[-] Some problem with the connection with the server, try restart the server.')
       print(error)
 
-  if method == 'get-file' or method == 'GET-FILE':
+  elif method == 'get-file' or method == 'GET-FILE':
     try:
       id_file = input('Id File > ')
       clientFiles = Client(file_server)
@@ -107,7 +107,7 @@ def main() -> None:
       print(error)
 
 
-  if method == 'post' or method == 'POST':
+  elif method == 'post' or method == 'POST':
     try:
       print('Put the data for send at server.')
       data = input('Data (Sample /home/user/hello.txt ) > ')
@@ -126,16 +126,16 @@ def main() -> None:
       print(error)
  
     except OSError:
-      error = Error('\n[-] Some problem with the network of the system.')
+      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
       print(error)
 
     except ConnectionError:  # in case bad connection
       error = Error('\n[-] Some problem with the connection with the server, try restart the server.')
       print(error)
 
-  if method == 'put' or method == 'PUT':
+  elif method == 'put' or method == 'PUT':
     try:
-      print('Put the data and id for update in the server.')
+      print('Put the id and the data for update in the server.')
       id = input('Id File > ')
       data = input('New Data (Sample /home/user/hello.txt ) > ')
       clientFiles = Client(file_server)
@@ -157,14 +157,14 @@ def main() -> None:
       print(error)
 
     except OSError:
-      error = Error('Some problem with the network of the system.')
+      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
       print(error)
 
     except ConnectionError:  # in case bad connection
       error = Error('Some problem with the connection with the server, try restart the server.')
       print(error)
 
-  if method == 'delete' or method == 'DELETE':
+  elif method == 'delete' or method == 'DELETE':
     try:
       print('Put the id of the file in the server for delete it.')
       id = input('Id file > ')
@@ -186,13 +186,17 @@ def main() -> None:
       print(error)
 
     except OSError:
-      error = Error('Some problem with the network of the system.')
+      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
       print(error)
 
     except ConnectionError:  # in case bad connection
       error = Error('Some problem with the connection with the server, try restart the server.')
       print(error)
 
+  else:
+    print('\nPlease choice a method for send to a route. Execute --help flag for more information')
+
 
 if __name__ == '__main__':
+  # executing main function
   main()

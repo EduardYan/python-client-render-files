@@ -3,11 +3,10 @@ This module have the class Client
 for create a client.
 """
 
-from simplejson.errors import JSONDecodeError
 from requests import get, post, put, delete
 from data.paths import DEFAULT_PATH_TO_SAVE
 from prefix.prefixs import PREFIX_POST, PREFIX_DELETE, PREFIX_PUT, PREFIX_GET_FILE
-from json import dumps
+from json import dumps, JSONDecodeError
 
 class Client:
   """
