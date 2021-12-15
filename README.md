@@ -69,7 +69,7 @@ __In alls the options (get, get-file, post, put, delete), we can pass in upperca
 * __Absoulete__ ---> /home/your_user/myOutput.txt
 
 -------------------------------------------
-Here we are running our client with the method get for the route *"/" or "/home"*. And with the file with the direction of server in the file of this proyect.
+Here we are running our client with the method get for the route *"/" or "/home"*. And with the file with the direction of server in the file of this proyect. I put a file called server.txt, there you can put the direction of the server.
 
 ```bash
 $ python3 main.py -m get -f ./server.txt

@@ -59,7 +59,7 @@ def main() -> None:
         show_content_request('get', output)
 
     except FileNotFoundError:
-      error = Error('[-] The file of the server not found in the system.')
+      error = Error('[-] The file of the server not found in the system. Or verify the path for save the output of the request.')
       print(error)
 
     except IsADirectoryError: # in case the path is a directory
@@ -91,7 +91,7 @@ def main() -> None:
       print(error)
 
     except FileNotFoundError: # in case the file of the server not found
-      error = Error('\n[-] The file from the direction for the server. Not found.')
+      error = Error('[-] The file of the server not found in the system. Or verify the path for save the output of the request.')
       print(error)
 
     except IsADirectoryError: # in case be a directory
@@ -122,7 +122,7 @@ def main() -> None:
         show_content_request('post', output)
 
     except IsADirectoryError: # in case be a directory
-      error = Error('\n[-] The path for save the file is a directory !!')
+      error = Error('[-] The file of the server not found in the system. Or verify the path for save the output of the request.')
       print(error)
  
     except OSError:
