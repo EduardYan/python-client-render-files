@@ -67,7 +67,7 @@ def main() -> None:
       print(error)
 
     except OSError: # this is when have some problem with the system
-      error = Error('[-] Some problem with the network of the system. Or verify the path for save the output of the request.')
+      error = Error('[-] Some problem with the network of the system. Or verify the path for save the output of the request. Also see the direction of the file of server.')
       print(error)
 
     except ConnectionError:  # in case bad connection
@@ -99,7 +99,7 @@ def main() -> None:
       print(error)
 
     except OSError: # this is in case some error with the operative system
-      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
+      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file. Also see the direction of the file of server.')
       print(error)
 
     except ConnectionError:  # in case bad connection
@@ -126,7 +126,7 @@ def main() -> None:
       print(error)
  
     except OSError:
-      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
+      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file. Also see the direction of the file of server.')
       print(error)
 
     except ConnectionError:  # in case bad connection
@@ -157,7 +157,7 @@ def main() -> None:
       print(error)
 
     except OSError:
-      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
+      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file. Also see the direction of the file of server.')
       print(error)
 
     except ConnectionError:  # in case bad connection
@@ -186,7 +186,7 @@ def main() -> None:
       print(error)
 
     except OSError:
-      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file.')
+      error = Error('\n[-] Some problem with the network of the system. Try again. Or verify the direction of the server in the file. Also see the direction of the file of server.')
       print(error)
 
     except ConnectionError:  # in case bad connection

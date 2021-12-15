@@ -137,3 +137,7 @@ __It does not mea that the file is not on the server if not what can not read it
 __But you can see the image in the browser.__
 
 ![watching-in-broweser](./doc/watching-in-browser.png)
+
+---------------------------------------------------------
+## Errors or Bugs.
+Send me a email to eduarygp@gmail.com
